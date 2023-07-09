@@ -20,8 +20,9 @@ document.addEventListener("DOMContentLoaded", function() {
       clock.textContent = formattedTime;
     }, 10);
 
-    reset()
-    main()
+    var container = document.getElementById("textContainer");
+    container.innerHTML = "" // remove default text
+    run()
 
   });
 
@@ -52,21 +53,3 @@ document.addEventListener("DOMContentLoaded", function() {
     return paddedNumber;
   }
 });
-
-function main() {
-  var container = document.getElementById("textContainer");
-  var articleTitle = 'Winthrop, Massachusetts';
-
-  container.innerHTML = "" // remove default text
-
-  fetchWikipediaArticle(articleTitle)
-    .then(function(content) {
-      // Do something with the content
-      console.log(content)
-      var processedContent = textProcessor(content);
-      displayWords(processedContent, container);
-    })
-    .catch(function(error) {
-      console.log('Error:', error);
-    });
-}
