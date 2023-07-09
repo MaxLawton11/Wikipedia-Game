@@ -1,15 +1,11 @@
-var text = "Hello, this is a sample text.";
-var words = text.split(" ");
-var container = document.getElementById("textContainer");
 var currentIndex = 0;
 var timeFactor = 150; // Adjust the time factor (in milliseconds) for controlling the speed
 
-function displayWords() {
+export function displayWords(text, container) {
+  var words = text.split(" ");
   if (currentIndex < words.length) {
     container.innerHTML += words[currentIndex] + " ";
     currentIndex++;
     setTimeout(displayWords, timeFactor);
   }
 }
-
-displayWords();
