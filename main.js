@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }, 10);
 
     var container = document.getElementById("textContainer");
-    container.innerHTML = "" // remove default text
+    container.innerHTML = ""
     run()
 
   });
@@ -31,6 +31,8 @@ document.addEventListener("DOMContentLoaded", function() {
     playMenu.classList.toggle("hidden");
   
     stopAnimation()
+    var container = document.getElementById("textContainer");
+    container.innerHTML = "Quitted. Press start to try again..."
 
     // Stop the clock timer
     clearInterval(timerInterval);

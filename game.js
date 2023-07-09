@@ -33,6 +33,7 @@ var stopFlag = false;
 function displayWords(text, container) {
 	if (stopFlag) return; // If the stop flag is true, stop the animation
   var words = text.split(" ");
+	words = randomStart(words)
   if (currentIndex < words.length) {
     container.innerHTML += words[currentIndex] + " ";
     currentIndex++;
@@ -51,6 +52,15 @@ function textProcessor(text) {
   var filteredText = text.replace(/==\s*\w+\s*==/g, '');
   return filteredText;
 }
+
+function randomStart(words) {
+	var indexLimit = Math.floor(words.length * 0.7);
+	var randomIndex = Math.floor(Math.random() * indexLimit);
+	var remainingWords = words.splice(randomIndex + 1);
+	return remainingWords
+}
+
+// ./game.js
 
 function run() {
   currentIndex = 0; // Reset the currentIndex
