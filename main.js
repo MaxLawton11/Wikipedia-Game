@@ -52,11 +52,13 @@ function textProcessor(text) {
 // REAL CODE BELOW HERE
 // CAN DO MUTI-SCRIPT WHEN WE ARN'T COCKBLOCKed BY CORS
 
+/*
 document.addEventListener("DOMContentLoaded", function() {
 
   var container = document.getElementById("textContainer");
   var articleTitle = 'Winthrop, Massachusetts';
 
+  container.innerHTML = "" // remove default text
 
   fetchWikipediaArticle(articleTitle)
     .then(function(content) {
@@ -70,3 +72,4 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 });
+*/
