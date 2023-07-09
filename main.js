@@ -1,60 +1,59 @@
-// ./pull.js
-function fetchWikipediaArticle(title) {
-    // URL for the crossorigin.me proxy
-    var proxyUrl = 'https://api.allorigins.win/get?url=';
-  
-    // URL for the Wikipedia API
-    var apiUrl =
-      'https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&titles=' +
-      encodeURIComponent(title) +
-      '&explaintext=true&redirects=true';
-  
-    // Making the request through the crossorigin.me proxy
-    return fetch(proxyUrl + encodeURIComponent(apiUrl))
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(data) {
-        // Extracting the page content from the API response
-        var response = JSON.parse(data.contents);
-        var pages = response.query.pages;
-        var pageId = Object.keys(pages)[0];
-        var content = pages[pageId].extract;
-  
-        return content;
-      });
-  }
-
-// ./display.js
-var currentIndex = 0;
-var timeFactor = 150; // Adjust the time factor (in milliseconds) for controlling the speed
-
-function displayWords(text, container) {
-  var words = text.split(" ");
-  if (currentIndex < words.length) {
-    container.innerHTML += words[currentIndex] + " ";
-    currentIndex++;
-    setTimeout(function() {
-      displayWords(text, container); // Pass the arguments when calling recursively
-    }, timeFactor);
-  }
-}
-
-
-// ./processor.js
-function textProcessor(text) {
-  var filteredText = text.replace(/==\s*\w+\s*==/g, '');
-  return filteredText;
-}
-
-
-
-// REAL CODE BELOW HERE
-// CAN DO MUTI-SCRIPT WHEN WE ARN'T COCKBLOCKed BY CORS
-
-/*
 document.addEventListener("DOMContentLoaded", function() {
+  var playButton = document.getElementById("playButton");
+  var stopButton = document.getElementById("stopButton");
+  var startMenu = document.getElementById("startMenu");
+  var playMenu = document.getElementById("playMenu");
+  var clock = document.getElementById("clock");
 
+  var timerInterval; // Holds the reference to the setInterval timer
+
+  playButton.addEventListener("click", function() {
+    startMenu.classList.toggle("hidden");
+    playMenu.classList.toggle("hidden");
+
+    // Start the clock timer
+    var startTime = Date.now(); // Record the start time
+    timerInterval = setInterval(function() {
+      var currentTime = Date.now();
+      var elapsedTime = currentTime - startTime;
+      var formattedTime = formatTime(elapsedTime);
+      clock.textContent = formattedTime;
+    }, 10);
+
+    reset()
+    main()
+
+  });
+
+  stopButton.addEventListener("click", function() {
+    startMenu.classList.toggle("hidden");
+    playMenu.classList.toggle("hidden");
+  
+    stopAnimation()
+
+    // Stop the clock timer
+    clearInterval(timerInterval);
+    clock.textContent = "0:00:000";
+  });
+
+  function formatTime(milliseconds) {
+    var totalSeconds = Math.floor(milliseconds / 1000);
+    var minutes = Math.floor(totalSeconds / 60);
+    var seconds = totalSeconds % 60;
+    var milliseconds = milliseconds % 1000;
+    return minutes + ":" + padZero(seconds, 2) + ":" + padZero(milliseconds, 3);
+  }
+
+  function padZero(number, width) {
+    var paddedNumber = number.toString();
+    while (paddedNumber.length < width) {
+      paddedNumber = "0" + paddedNumber;
+    }
+    return paddedNumber;
+  }
+});
+
+function main() {
   var container = document.getElementById("textContainer");
   var articleTitle = 'Winthrop, Massachusetts';
 
@@ -70,6 +69,4 @@ document.addEventListener("DOMContentLoaded", function() {
     .catch(function(error) {
       console.log('Error:', error);
     });
-
-});
-*/
+}
