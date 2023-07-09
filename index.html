@@ -1,5 +1,7 @@
 <html>
   <head>
+    <link rel="stylesheet" href="styles.css">
+
     <h1>Wikipedia Guessing Game</h1>
   </head>
   <body>
@@ -27,38 +29,6 @@
     </div>
   
     <div id="textContainer"> Press start to begin...</div>
-    <style>
-      #textContainer {
-        border: 2px solid black;
-        height: 40%;
-        width: 60%;
-        background-color: lightgray;
-      }
-
-      #startMenu, #playMenu {
-        position: relative; /* Enable positioning for the container */
-        height: 100px;
-        width: 200px;
-        border: 2px solid black;
-        margin-bottom: 10px;
-        padding: 5px;
-      }
-
-      #startMenu, #playMenu span, label {
-        font-size: large;
-      }
-
-      #playButton, #stopButton {
-        position: absolute; /* Position the button relative to the container */
-        bottom: 5px; /* 5 pixels from the bottom */
-        left: 5px; /* 5 pixels from the left */
-      }
-
-      .hidden {
-        display: none;
-      }
-
-    </style>
     <script>
       document.addEventListener("DOMContentLoaded", function() {
         var playButton = document.getElementById("playButton");
