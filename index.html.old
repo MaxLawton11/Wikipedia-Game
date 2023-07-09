@@ -6,15 +6,11 @@
 
     <div id="startMenu">
       <span>0:00:000</span> <br>
-      <label for="options">Guess:</label>
-      <select id="options"><option value="">---------</option></select>
       <button id="playButton">Start</button>
     </div>
 
     <div id="playMenu" class="hidden">
       <span id="clock">0:00:000</span> <br>
-      <label for="options">Guess:</label>
-      <select id="options"><option value="">---------</option></select>
       <button id="stopButton">Stop</button>
     </div>
   
@@ -36,7 +32,7 @@
         padding: 5px;
       }
 
-      #startMenu, #playMenu span, label {
+      #startMenu, #playMenu span {
         font-size: large;
       }
 
