@@ -27,15 +27,30 @@ function fetchWikipediaArticle(title) {
 
 // ./display.js
 var currentIndex = 0;
-var timeFactor = 150; // Adjust the time factor (in milliseconds) for controlling the speed
 var stopFlag = false;
+var autoScroll = true; // add to settings later
+
+
+//setings import
 
 function displayWords(text, container) {
+
+  // get timeing from settings
+  var timeFactorSelector = document.getElementById("wordDelaySelector");
+  var timeFactor = timeFactorSelector.value;
+
+  // autoscroll
+  var autoScrollCheckbox = document.getElementById("autoScroll");
+  var autoScroll = Boolean(autoScrollCheckbox.checked);
+
 	if (stopFlag) return; // If the stop flag is true, stop the animation
   var words = text.split(" ");
 	words = randomStart(words)
   if (currentIndex < words.length) {
     container.innerHTML += words[currentIndex] + " ";
+
+    if (autoScroll) { scrollToBottom(container); }
+
     currentIndex++;
     setTimeout(function() {
       displayWords(text, container); // Pass the arguments when calling recursively
@@ -46,6 +61,11 @@ function displayWords(text, container) {
 function stopAnimation() {
     stopFlag = true; // Set the stop flag to true to stop the animation
   }
+
+// scroll to bottom
+function scrollToBottom(container) {
+  container.scrollTop = container.scrollHeight;
+}
 
 // ./processor.js
 function textProcessor(text) {

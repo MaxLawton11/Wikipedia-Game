@@ -3,6 +3,7 @@
     height: 40%;
     width: 60%;
     background-color: lightgray;
+    overflow: scroll;
   }
 
   #startMenu, #playMenu {
@@ -11,6 +12,15 @@
     width: 200px;
     border: 2px solid black;
     margin-bottom: 10px;
+    padding: 5px;
+  }
+
+  #settings {
+    position: relative; /* Enable positioning for the container */
+    height: 100px;
+    width: 200px;
+    border: 2px solid black;
+    margin-top: 10px;
     padding: 5px;
   }
 
