@@ -2,23 +2,9 @@
   <head>
   </head>
   <body>
-   <div id="textContainer"></div>
+    <div id="textContainer"></div>
 
-  <script>
-    var text = "Hello, this is a sample text.";
-    var words = text.split(" ");
-    var container = document.getElementById("textContainer");
-    var currentIndex = 0;
-    var timeFactor = 500; // Adjust the time factor (in milliseconds) for controlling the speed
-
-    function displayWords() {
-      if (currentIndex < words.length) {
-        container.innerHTML += words[currentIndex] + " ";
-        currentIndex++;
-        setTimeout(displayWords, timeFactor);
-      }
-    }
-
+  <script src="display.js">
     displayWords();
   </script>
   </body>
