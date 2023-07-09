@@ -1,30 +1,24 @@
 // Replace 'Article_Title' with the title of the Wikipedia article you want to fetch
-var articleTitle = 'Article_Title';
+var articleTitle = 'Winthrop, Massachusetts';
 
-// URL for the MediaWiki API
-var apiUrl = 'https://en.wikipedia.org/w/api.php';
+// URL for the crossorigin.me proxy
+var proxyUrl = 'https://api.allorigins.win/get?url=';
 
-// Parameters for the API request
-var params = {
-  action: 'query',
-  prop: 'extracts',
-  format: 'json',
-  titles: articleTitle,
-  explaintext: true,
-  redirects: true
-};
+// URL for the Wikipedia API
+var apiUrl =
+  'https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&titles=' +
+  encodeURIComponent(articleTitle) +
+  '&explaintext=true&redirects=true';
 
-// Constructing the API URL with the parameters
-var apiURL = apiUrl + '?' + new URLSearchParams(params);
-
-// Making the API request
-fetch(apiURL)
+// Making the request through the crossorigin.me proxy
+fetch(proxyUrl + encodeURIComponent(apiUrl))
   .then(function(response) {
     return response.json();
   })
   .then(function(data) {
     // Extracting the page content from the API response
-    var pages = data.query.pages;
+    var response = JSON.parse(data.contents);
+    var pages = response.query.pages;
     var pageId = Object.keys(pages)[0];
     var content = pages[pageId].extract;
 

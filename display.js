@@ -11,3 +11,5 @@ function displayWords() {
     setTimeout(displayWords, timeFactor);
   }
 }
+
+displayWords();
