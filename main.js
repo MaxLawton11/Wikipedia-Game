@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var numPossibleArticles = Number(numPossibleArticlesSelector.value);
     var options = randomArticles(numPossibleArticles);
 
-
+    // run main game script
     run(options)
   });
 
