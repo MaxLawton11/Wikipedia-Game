@@ -32,7 +32,6 @@ var autoScroll = true; // add to settings later
 
 
 //setings import
-
 function displayWords(text, container) {
 
   // get timeing from settings
@@ -68,6 +67,7 @@ function scrollToBottom(container) {
 }
 
 // ./processor.js
+
 function textProcessor(text) {
   var filteredText = text.replace(/==\s*\w+\s*==/g, '');
   return filteredText;
@@ -117,24 +117,31 @@ function padZero(number, width) {
   return paddedNumber;
 }
 
+// ./guess.js
+
+function assignGuesses(options) {
+  var guessSelector = document.getElementById('guess');
+  guessSelector.innerHTML = options.map(option => `<option value="${option}">${option}</option>`).join('');
+}
+
 // ./game.js
 
 function run() {
   currentIndex = 0; // Reset the currentIndex
   stopFlag = false; // Reset the stopFlag
 
-	var container = document.getElementById("textContainer");
-
 	var possibleTitles = Array('Winthrop, Massachusetts', 'Gilgamesh', 'GitHub', 'King Arthur');
   var articleTitle = possibleTitles[Math.floor(Math.random()*possibleTitles.length)];
+
+  // set up guesses
+  assignGuesses(possibleTitles)
   
   fetchWikipediaArticle(articleTitle)
     .then(function(content) {
       // Do something with the content
       var processedContent = textProcessor(content);
-      console.log(processedContent);
       startClock()
-      displayWords(processedContent, container);
+      displayWords(processedContent, document.getElementById("textContainer"));
     })
     .catch(function(error) {
       console.log('Error:', error);

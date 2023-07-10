@@ -16,7 +16,6 @@ document.addEventListener("DOMContentLoaded", function() {
     var container = document.getElementById("textContainer");
     container.innerHTML = ""
     run()
-
   });
 
   // on stop button press
@@ -28,6 +27,5 @@ document.addEventListener("DOMContentLoaded", function() {
     var container = document.getElementById("textContainer");
     container.innerHTML = "Quitted. Press start to try again..."
     stopClock()
-
   });
 });
