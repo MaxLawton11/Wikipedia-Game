@@ -117,30 +117,159 @@ function padZero(number, width) {
   return paddedNumber;
 }
 
+// ./status.js
+function updateStatus(event) {
+  var statusElement = document.getElementById('statusText');
+  switch (event) {
+    case 'loading' :
+      statusElement.innerHTML = 'Article loading... Get ready!'
+    case 'incorrect' :
+      break;
+    case 'playing' :
+      statusElement.innerHTML = 'Playing! Make a guess!'
+
+  }
+}
+
 // ./guess.js
 
 function assignGuesses(options) {
   var guessSelector = document.getElementById('guess');
+  guessSelector.disabled = false;
   guessSelector.innerHTML = options.map(option => `<option value="${option}">${option}</option>`).join('');
+}
+
+function testGuess () {}
+
+// ./articles.js
+
+function randomArticles(numPossibleArticles) {
+  const articles = [
+    "Aquila (constellation)",
+    "Greek alphabet",
+    "Sushi",
+    "Napoleon",
+    "Solar power",
+    "Renaissance",
+    "Sydney Opera House",
+    "Albert Einstein",
+    "Tennis",
+    "Great Barrier Reef",
+    "Vincent van Gogh",
+    "Statue of Liberty",
+    "Artificial intelligence",
+    "The Beatles",
+    "Mount Everest",
+    "Maya civilization",
+    "Leonardo da Vinci",
+    "Black hole",
+    "Marie Curie",
+    "Taj Mahal",
+    "Global warming",
+    "World War II",
+    "Great Wall of China",
+    "DNA",
+    "Queen Elizabeth II",
+    "Ancient Egypt",
+    "Pablo Picasso",
+    "Internet",
+    "Titanic",
+    "Buddhism",
+    "World Cup",
+    "Albert Einstein",
+    "Viking Age",
+    "New York City",
+    "Ancient Greece",
+    "Mona Lisa",
+    "World War I",
+    "Steve Jobs",
+    "Michelangelo",
+    "Space exploration",
+    "Martin Luther King Jr.",
+    "Big Bang",
+    "United Nations",
+    "Roman Empire",
+    "Elvis Presley",
+    "African elephants",
+    "Charles Darwin",
+    "Hubble Space Telescope",
+    "Wolfgang Amadeus Mozart",
+    "Moon landing",
+    "Hinduism",
+    "Internet of things",
+    "Amsterdam",
+    "Leonardo DiCaprio",
+    "Nikola Tesla",
+    "Machu Picchu",
+    "Human rights",
+    "The Simpsons",
+    "Gravity",
+    "Walt Disney",
+    "Climate change",
+    "Penguins",
+    "Sigmund Freud",
+    "Mount Kilimanjaro",
+    "Ancient Rome",
+    "Virtual reality",
+    "Alberto Santos-Dumont",
+    "Frida Kahlo",
+    "Apollo 11",
+    "Barack Obama",
+    "Mars",
+    "The Great Gatsby",
+    "Venice",
+    "Evolution",
+    "Marilyn Monroe",
+    "Abraham Lincoln",
+    "SpaceX",
+    "Polar bear",
+    "Johannes Kepler",
+    "Paris",
+    "Steve Jobs",
+    "Black Mirror",
+    "Jazz",
+    "Pompeii",
+    "Psychology",
+    "Stephen Hawking",
+    "Climate change denial",
+    "Vincent van Gogh's art",
+    "Neuschwanstein Castle",
+    "Romeo and Juliet",
+    "Leonardo da Vinci's inventions",
+    "Galapagos Islands",
+    "Google",
+    "Mount Vesuvius"
+  ];  
+  
+  var selectedArticles = [];
+  var totalElements = articles.length;
+
+  while (selectedArticles.length < numPossibleArticles) {
+    const randomIndex = Math.floor(Math.random() * totalElements);
+    const randomArticle = articles[randomIndex];
+    if (!selectedArticles.includes(randomArticle)) {
+      selectedArticles.push(randomArticle);
+    }
+  }
+  return selectedArticles;
 }
 
 // ./game.js
 
-function run() {
+function run(possibleArticles) {
   currentIndex = 0; // Reset the currentIndex
   stopFlag = false; // Reset the stopFlag
 
-	var possibleTitles = Array('Winthrop, Massachusetts', 'Gilgamesh', 'GitHub', 'King Arthur');
-  var articleTitle = possibleTitles[Math.floor(Math.random()*possibleTitles.length)];
-
-  // set up guesses
-  assignGuesses(possibleTitles)
+  var articleTitle = possibleArticles[Math.floor(Math.random()*possibleArticles.length)];
   
   fetchWikipediaArticle(articleTitle)
     .then(function(content) {
       // Do something with the content
       var processedContent = textProcessor(content);
+      // set up guesses
+      assignGuesses(possibleArticles)
       startClock()
+      updateStatus('playing')
       displayWords(processedContent, document.getElementById("textContainer"));
     })
     .catch(function(error) {

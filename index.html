@@ -16,8 +16,12 @@
       <span>0</span> 
       <br>
       <label>Guess:</label>
-      <select disabled><</select>
+      <select disabled></select>
       <button>Try</button>
+      <br>
+      <label>Status:</label>
+      <span>No game in play</span>
+
       <button id="playButton">Start</button>
     </div>
 
@@ -28,8 +32,12 @@
       <span id="trys">0</span> 
       <br> 
       <label>Guess:</label>
-      <select id="guess"></select>
+      <select id="guess" disabled></select>
       <button id="tryButton">Try</button>
+      <br>
+      <label>Status:</label>
+      <span id="statusText">No game in play</span>
+
       <button id="stopButton">Stop</button>
     </div>
   
@@ -37,6 +45,16 @@
 
     <div id="settings">
       <label><strong>Settings:</strong></label>
+      <br>
+      <label for="numPossibleArticlesSelector">Num of possible articles: </label>
+      <select id="numPossibleArticlesSelector">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="15" selected="selected">15</option>
+        <option value="25">25</option>
+        <option value="35">35</option>
+        <option value="50">50</option>
+      </select>
       <br>
       <label for="wordDelaySelector">Word Delay :</label>
       <select id="wordDelaySelector">

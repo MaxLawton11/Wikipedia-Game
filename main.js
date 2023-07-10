@@ -2,10 +2,9 @@ document.addEventListener("DOMContentLoaded", function() {
   // define buttons and divs
   var playButton = document.getElementById("playButton");
   var stopButton = document.getElementById("stopButton");
+  var tryButton = document.getElementById("tryButton");
   var startMenu = document.getElementById("startMenu");
   var playMenu = document.getElementById("playMenu");
-
-  var timerInterval; // holds the reference to the setInterval timer
 
   // on play button press
   playButton.addEventListener("click", function() {
@@ -15,7 +14,16 @@ document.addEventListener("DOMContentLoaded", function() {
     // run the main game after clearing
     var container = document.getElementById("textContainer");
     container.innerHTML = ""
-    run()
+
+    // update stauts
+    updateStatus('loading')
+
+    var numPossibleArticlesSelector = document.getElementById('numPossibleArticlesSelector');
+    var numPossibleArticles = Number(numPossibleArticlesSelector.value);
+    var options = randomArticles(numPossibleArticles);
+
+
+    run(options)
   });
 
   // on stop button press
@@ -27,5 +35,10 @@ document.addEventListener("DOMContentLoaded", function() {
     var container = document.getElementById("textContainer");
     container.innerHTML = "Quitted. Press start to try again..."
     stopClock()
+  });
+
+  // on try button
+  tryButton.addEventListener("click", function () {
+
   });
 });
