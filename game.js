@@ -7,7 +7,7 @@ function fetchWikipediaArticle(title) {
     var apiUrl =
       'https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&titles=' +
       encodeURIComponent(title) +
-      '&explaintext=true&redirects=true';
+      '&explaintext=false&redirects=false';
   
     // Making the request through the crossorigin.me proxy
     return fetch(proxyUrl + encodeURIComponent(apiUrl))
@@ -134,9 +134,19 @@ function updateStatus(event) {
 // ./guess.js
 
 function assignGuesses(options) {
-  var guessSelector = document.getElementById('guess');
+  var guessSelector = document.getElementById('guessSelector');
   guessSelector.disabled = false;
   guessSelector.innerHTML = options.map(option => `<option value="${option}">${option}</option>`).join('');
+}
+
+function disableCurrentGuess(guessSelector, optionToDisable) {
+  for (var i = 0; i < guessSelector.options.length; i++) {
+    if (guessSelector.options[i].value === optionToDisable) {
+      guessSelector.options[i].disabled = true;
+      guessSelector.selectedIndex = -1;
+      break;
+    }
+  }
 }
 
 function testGuess () {}
@@ -256,16 +266,14 @@ function randomArticles(numPossibleArticles) {
 
 // ./game.js
 
-function run(possibleArticles) {
+function run(articleTitle, possibleArticles) {
   currentIndex = 0; // Reset the currentIndex
   stopFlag = false; // Reset the stopFlag
-
-  var articleTitle = possibleArticles[Math.floor(Math.random()*possibleArticles.length)];
   
   fetchWikipediaArticle(articleTitle)
     .then(function(content) {
       // Do something with the content
-      var processedContent = textProcessor(content);
+      var processedContent = content //textProcessor(content);
       // set up guesses
       assignGuesses(possibleArticles)
       startClock()

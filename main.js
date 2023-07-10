@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", function() {
   var startMenu = document.getElementById("startMenu");
   var playMenu = document.getElementById("playMenu");
 
+  var articleTitle; // track correct title
+
   // on play button press
   playButton.addEventListener("click", function() {
     startMenu.classList.toggle("hidden");
@@ -20,11 +22,25 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var numPossibleArticlesSelector = document.getElementById('numPossibleArticlesSelector');
     var numPossibleArticles = Number(numPossibleArticlesSelector.value);
-    var options = randomArticles(numPossibleArticles);
+    var possibleArticles = randomArticles(numPossibleArticles);
+    articleTitle = possibleArticles[Math.floor(Math.random()*possibleArticles.length)];
+    console.log(articleTitle)
 
-
-    run(options)
+    run(articleTitle, possibleArticles)
   });
+
+
+
+  // on try button
+  tryButton.addEventListener("click", function () {
+    var guessSelector = document.getElementById('guessSelector');
+    var guess = guessSelector.value;
+
+    if (guess) {
+      console.log(guess)
+      disableCurrentGuess(guessSelector, guess)
+    }
+  });  
 
   // on stop button press
   stopButton.addEventListener("click", function() {
@@ -35,10 +51,5 @@ document.addEventListener("DOMContentLoaded", function() {
     var container = document.getElementById("textContainer");
     container.innerHTML = "Quitted. Press start to try again..."
     stopClock()
-  });
-
-  // on try button
-  tryButton.addEventListener("click", function () {
-
   });
 });
