@@ -57,6 +57,7 @@ function displayWords(text, container) {
   }
 }
 
+// sets stop flag to tell display to stop
 function stopAnimation() {
     stopFlag = true; // Set the stop flag to true to stop the animation
   }
