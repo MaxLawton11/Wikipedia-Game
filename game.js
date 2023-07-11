@@ -128,7 +128,6 @@ function updateStatus(event) {
       break;
     case 'playing' :
       statusElement.innerHTML = 'Playing! Make a guess!'
-
   }
 }
 
@@ -150,7 +149,9 @@ function disableCurrentGuess(guessSelector, optionToDisable) {
   }
 }
 
-function testGuess () {}
+function testGuess(guess, articleTitle) {
+  return (guess === articleTitle)
+}
 
 // ./articles.js
 

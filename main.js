@@ -1,3 +1,4 @@
+// ./buttons.js
 document.addEventListener("DOMContentLoaded", function() {
   // define buttons and divs
   var playButton = document.getElementById("playButton");
@@ -12,44 +13,63 @@ document.addEventListener("DOMContentLoaded", function() {
   playButton.addEventListener("click", function() {
     startMenu.classList.toggle("hidden");
     playMenu.classList.toggle("hidden");
-
-    // run the main game after clearing
-    var container = document.getElementById("textContainer");
-    container.innerHTML = ""
-
-    // update stauts
-    updateStatus('loading')
-
-    var numPossibleArticlesSelector = document.getElementById('numPossibleArticlesSelector');
-    var numPossibleArticles = Number(numPossibleArticlesSelector.value);
-    var possibleArticles = randomArticles(numPossibleArticles);
-    articleTitle = possibleArticles[Math.floor(Math.random()*possibleArticles.length)];
-    console.log(articleTitle)
-
-    run(articleTitle, possibleArticles)
+    start();
   });
-
-
 
   // on try button
   tryButton.addEventListener("click", function () {
-    var guessSelector = document.getElementById('guessSelector');
-    var guess = guessSelector.value;
-
-    if (guess) {
-      console.log(guess)
-      disableCurrentGuess(guessSelector, guess)
-    }
+    guess();
   });  
 
   // on stop button press
   stopButton.addEventListener("click", function() {
     startMenu.classList.toggle("hidden");
     playMenu.classList.toggle("hidden");
-  
-    stopAnimation()
-    var container = document.getElementById("textContainer");
-    container.innerHTML = "Quitted. Press start to try again..."
-    stopClock()
+    quit();
   });
 });
+
+
+// ./game.js
+
+function start() {
+  // run the main game after clearing
+  var container = document.getElementById("textContainer");
+  container.innerHTML = ""
+
+  // update stauts
+  updateStatus('loading')
+
+  var numPossibleArticlesSelector = document.getElementById('numPossibleArticlesSelector');
+  var numPossibleArticles = Number(numPossibleArticlesSelector.value);
+  var possibleArticles = randomArticles(numPossibleArticles);
+  articleTitle = possibleArticles[Math.floor(Math.random()*possibleArticles.length)];
+  console.log(articleTitle);
+
+  run(articleTitle, possibleArticles);
+}
+
+function guess() {
+  var guessSelector = document.getElementById('guessSelector');
+  var guess = guessSelector.value;
+
+  if (guess) {
+    console.log(guess);
+    disableCurrentGuess(guessSelector, guess);
+
+  }
+
+  function correct() {}
+  function incorrect() {}
+}
+
+function win() {
+
+}
+
+function quit() {
+  stopAnimation()
+  var container = document.getElementById("textContainer");
+  container.innerHTML = "Quitted. Press start to try again..."
+  stopClock();
+}
