@@ -1,40 +1,41 @@
 // ./pull.js
-// Wikipedia API endpoint
-const apiUrl = 'https://en.wikipedia.org/w/api.php';
 
-// Function to fetch Wikipedia article content
-async function fetchArticleContent(articleTitle) {
-  try {
-    // Create a URL for the API request
-    const url = new URL(apiUrl);
-    url.searchParams.append('action', 'query');
-    url.searchParams.append('format', 'json');
-    url.searchParams.append('prop', 'extracts');
-    url.searchParams.append('exintro', '');
-    url.searchParams.append('explaintext', '');
-    url.searchParams.append('titles', articleTitle);
+function fetchArticleContent(articleTitle) {
+  return new Promise((resolve, reject) => {
+    const apiUrl = `https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro=&explaintext=&titles=${articleTitle}&callback=processArticleContent`;
 
-    // Make the API request
-    const response = await fetch(url);
-    const data = await response.json();
+    // Create a script tag with the API URL
+    const script = document.createElement('script');
+    script.src = apiUrl;
 
-    // Extract the page content from the API response
-    const pages = data.query.pages;
-    const pageId = Object.keys(pages)[0];
-    let content = pages[pageId].extract;
+    // Define the callback function
+    window.processArticleContent = function (data) {
+      // Extract the page content from the API response
+      const pages = data.query.pages;
+      const pageId = Object.keys(pages)[0];
+      const content = pages[pageId].extract;
 
-    // Remove headings and hover tips
-    content = content.replace(/==+.+?==+/g, ''); // Remove headings
-    content = content.replace(/{{.+?}}/g, ''); // Remove hover tips
+      // Remove the script tag
+      script.remove();
 
-    // Extract only words from the content
-    const words = content.match(/\b\w+\b/g).join(' ');
+      // Resolve the promise with the content
+      resolve(content);
+    };
 
-    return words;
-  } catch (error) {
-    console.error('Error fetching article content:', error);
-  }
+    // Error handling if the script fails to load
+    script.onerror = function () {
+      // Remove the script tag
+      script.remove();
+
+      // Reject the promise with an error message
+      reject(new Error('Failed to load article content'));
+    };
+
+    // Append the script tag to the document to initiate the request
+    document.body.appendChild(script);
+  });
 }
+
 
 // ./display.js
 var currentIndex = 0;
@@ -42,7 +43,7 @@ var stopFlag = false;
 
 
 //setings import
-function displayWords(text, container) {
+function displayWords(words, container) {
 
   // get timeing from settings
   var timeFactorSelector = document.getElementById("wordDelaySelector");
@@ -53,8 +54,7 @@ function displayWords(text, container) {
   var autoScroll = Boolean(autoScrollCheckbox.checked);
 
 	if (stopFlag) return; // If the stop flag is true, stop the animation
-  var words = text.split(" ");
-	words = randomStart(words)
+
   if (currentIndex < words.length) {
     container.innerHTML += words[currentIndex] + " ";
 
@@ -62,7 +62,7 @@ function displayWords(text, container) {
 
     currentIndex++;
     setTimeout(function() {
-      displayWords(text, container); // Pass the arguments when calling recursively
+      displayWords(words, container); // Pass the arguments when calling recursively
     }, timeFactor);
   }
 }
@@ -84,10 +84,12 @@ function textProcessor(text) {
   return filteredText;
 }
 
-function randomStart(words) {
+function randomStart(text) {
+  var words = text.split(" ");
 	var indexLimit = Math.floor(words.length * 0.7);
 	var randomIndex = Math.floor(Math.random() * indexLimit);
 	var remainingWords = words.splice(randomIndex + 1);
+  console.log(remainingWords)
 	return remainingWords
 }
 
@@ -295,17 +297,16 @@ function run(articleTitle, possibleArticles) {
   stopFlag = false; // Reset the stopFlag
 
 fetchArticleContent(articleTitle)
-  .then(words => {
-    var processedContent = content //textProcessor(content);
+  .then(content => {
+    var processedContent = randomStart(content);
     // set up guesses
     assignGuesses(possibleArticles)
     startClock()
     updateStatus('playing')
+    console.log(content)
     displayWords(processedContent, document.getElementById("textContainer"));
   })
   .catch(error => {
-    console.error('Error:', error);
+    console.error(error);
   });
-  
-  
 }

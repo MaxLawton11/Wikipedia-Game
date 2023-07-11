@@ -15,7 +15,6 @@ document.addEventListener("DOMContentLoaded", function() {
     var guessSelector = document.getElementById('guessSelector');
     var tryButton = document.getElementById('tryButton');
     guessSelector.disabled = true;
-    guessSelector.selectedIndex = -1;
     tryButton.disabled = true;
 
     start();
@@ -68,19 +67,18 @@ function guess() {
   var guessSelector = document.getElementById('guessSelector');
   var guess = guessSelector.value;
 
+  var trys = document.getElementById("trys");
+
   if (guess) {
     if (guess === articleTitle) {
       win()
     }
     else {
       disableCurrentGuess(guessSelector, guess);
-      updateStatus('incorrect')
+      updateStatus('incorrect');
+      trys.innerHTML = Number(trys.innerHTML) + 1
+
     }
-  }
-
-  function correct() {}
-  function incorrect() {
-
   }
 }
 
@@ -88,7 +86,8 @@ function win() {
   stopAnimation()
   var container = document.getElementById("textContainer");
   var style = "style='padding: 0;'"
-  container.innerHTML += `<br> <h2 ${style}>You Win!</h2> <h3 ${style}>Article: ${articleTitle}</h3> <h3 ${style}>Clock: ()</h3>`
+  var trys = document.getElementById("trys");
+  container.innerHTML += `<br> <h2 ${style}>You Win!</h2> <h3 ${style}>Article: ${articleTitle}</h3> <h3 ${style}> Incorrect trys: ${trys.innerHTML}</h3> <h3 ${style}>Clock: ()</h3>`
   scrollToBottom(container)
   stopClock();
 
