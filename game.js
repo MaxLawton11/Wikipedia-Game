@@ -141,8 +141,12 @@ function updateStatus(event) {
 // ./guess.js
 
 function assignGuesses(options) {
+  // this is when we want to relses the inputs
   var guessSelector = document.getElementById('guessSelector');
+  var tryButton = document.getElementById('tryButton');
   guessSelector.disabled = false;
+  tryButton.disabled = false;
+
   guessSelector.innerHTML = options.map(option => `<option value="${option}">${option}</option>`).join('');
 }
 

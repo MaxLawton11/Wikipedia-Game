@@ -11,6 +11,12 @@ document.addEventListener("DOMContentLoaded", function() {
   playButton.addEventListener("click", function() {
     startMenu.classList.toggle("hidden");
     playMenu.classList.toggle("hidden");
+
+    var guessSelector = document.getElementById('guessSelector');
+    var tryButton = document.getElementById('tryButton');
+    guessSelector.disabled = true;
+    tryButton.disabled = true;
+
     start();
   });
 
@@ -23,7 +29,13 @@ document.addEventListener("DOMContentLoaded", function() {
   stopButton.addEventListener("click", function() {
     startMenu.classList.toggle("hidden");
     playMenu.classList.toggle("hidden");
-    win();
+
+    var guessSelector = document.getElementById('guessSelector');
+    var tryButton = document.getElementById('tryButton');
+    guessSelector.disabled = true;
+    tryButton.disabled = true;
+
+    quit();
   });
 });
 
@@ -55,10 +67,13 @@ function guess() {
   var guess = guessSelector.value;
 
   if (guess) {
-    console.log(guess);
-    disableCurrentGuess(guessSelector, guess);
-    updateStatus('incorrect')
-
+    if (guess === articleTitle) {
+      win()
+    }
+    else {
+      disableCurrentGuess(guessSelector, guess);
+      updateStatus('incorrect')
+    }
   }
 
   function correct() {}
@@ -76,6 +91,9 @@ function win() {
 
   var numPossibleArticlesSelector = document.getElementById('numPossibleArticlesSelector');
   numPossibleArticlesSelector.disabled = false;
+
+  stopButton.innerHTML = "<strong>Reset</strong>" //pretend this is a reset button
+
 }
 
 function quit() {
@@ -85,4 +103,5 @@ function quit() {
   stopClock();
   var numPossibleArticlesSelector = document.getElementById('numPossibleArticlesSelector');
   numPossibleArticlesSelector.disabled = false;
+  stopButton.innerHTML = "<strong>Stop</strong>" // becuase this is run everytime we play this is where we reset
 }
