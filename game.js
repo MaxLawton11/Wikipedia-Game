@@ -28,7 +28,6 @@ function fetchWikipediaArticle(title) {
 // ./display.js
 var currentIndex = 0;
 var stopFlag = false;
-var autoScroll = true; // add to settings later
 
 
 //setings import
@@ -83,7 +82,7 @@ function randomStart(words) {
 
 // ./clock.js
 
-function startClock(clockElement) {
+function startClock() {
   var clock = document.getElementById("clock");
   // start the clock timer
   var startTime = Date.now(); // Record the start time

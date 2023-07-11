@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
   stopButton.addEventListener("click", function() {
     startMenu.classList.toggle("hidden");
     playMenu.classList.toggle("hidden");
-    quit();
+    win();
   });
 });
 
@@ -41,6 +41,7 @@ function start() {
   updateStatus('loading')
 
   var numPossibleArticlesSelector = document.getElementById('numPossibleArticlesSelector');
+  numPossibleArticlesSelector.disabled = true;
   var numPossibleArticles = Number(numPossibleArticlesSelector.value);
   var possibleArticles = randomArticles(numPossibleArticles);
   articleTitle = possibleArticles[Math.floor(Math.random()*possibleArticles.length)];
@@ -69,14 +70,19 @@ function guess() {
 function win() {
   stopAnimation()
   var container = document.getElementById("textContainer");
-  container.innerHTML = "Quitted. Press start to try again..."
+  container.innerHTML += "<br> <h2>You Win!</h2> <h3>The article was ()</h3> <h3>Clock: ()</h3>"
+  scrollToBottom(container)
   stopClock();
 
+  var numPossibleArticlesSelector = document.getElementById('numPossibleArticlesSelector');
+  numPossibleArticlesSelector.disabled = false;
 }
 
 function quit() {
-  stopAnimation()
+  stopAnimation();
   var container = document.getElementById("textContainer");
   container.innerHTML = "Quitted. Press start to try again..."
   stopClock();
+  var numPossibleArticlesSelector = document.getElementById('numPossibleArticlesSelector');
+  numPossibleArticlesSelector.disabled = false;
 }
