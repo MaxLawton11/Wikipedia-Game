@@ -87,7 +87,8 @@ function guess() {
 function win() {
   stopAnimation()
   var container = document.getElementById("textContainer");
-  container.innerHTML += `<br> <h2 class="game">You Win!</h2> <h3 class="game">Article: ${articleTitle}</h3> <h3 class="game">Clock: ()</h3>`
+  var style = "style='padding: 0;'"
+  container.innerHTML += `<br> <h2 ${style}>You Win!</h2> <h3 ${style}>Article: ${articleTitle}</h3> <h3 ${style}>Clock: ()</h3>`
   scrollToBottom(container)
   stopClock();
 

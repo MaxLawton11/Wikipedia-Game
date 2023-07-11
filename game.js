@@ -1,29 +1,40 @@
 // ./pull.js
-function fetchWikipediaArticle(title) {
-    // URL for the crossorigin.me proxy
-    var proxyUrl = 'https://api.allorigins.win/get?url=';
-  
-    // URL for the Wikipedia API
-    var apiUrl =
-      'https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&titles=' +
-      encodeURIComponent(title) +
-      '&explaintext=false&redirects=false';
-  
-    // Making the request through the crossorigin.me proxy
-    return fetch(proxyUrl + encodeURIComponent(apiUrl))
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(data) {
-        // Extracting the page content from the API response
-        var response = JSON.parse(data.contents);
-        var pages = response.query.pages;
-        var pageId = Object.keys(pages)[0];
-        var content = pages[pageId].extract;
-  
-        return content;
-      });
+// Wikipedia API endpoint
+const apiUrl = 'https://en.wikipedia.org/w/api.php';
+
+// Function to fetch Wikipedia article content
+async function fetchArticleContent(articleTitle) {
+  try {
+    // Create a URL for the API request
+    const url = new URL(apiUrl);
+    url.searchParams.append('action', 'query');
+    url.searchParams.append('format', 'json');
+    url.searchParams.append('prop', 'extracts');
+    url.searchParams.append('exintro', '');
+    url.searchParams.append('explaintext', '');
+    url.searchParams.append('titles', articleTitle);
+
+    // Make the API request
+    const response = await fetch(url);
+    const data = await response.json();
+
+    // Extract the page content from the API response
+    const pages = data.query.pages;
+    const pageId = Object.keys(pages)[0];
+    let content = pages[pageId].extract;
+
+    // Remove headings and hover tips
+    content = content.replace(/==+.+?==+/g, ''); // Remove headings
+    content = content.replace(/{{.+?}}/g, ''); // Remove hover tips
+
+    // Extract only words from the content
+    const words = content.match(/\b\w+\b/g).join(' ');
+
+    return words;
+  } catch (error) {
+    console.error('Error fetching article content:', error);
   }
+}
 
 // ./display.js
 var currentIndex = 0;
@@ -282,18 +293,19 @@ function randomArticles(numPossibleArticles) {
 function run(articleTitle, possibleArticles) {
   currentIndex = 0; // Reset the currentIndex
   stopFlag = false; // Reset the stopFlag
+
+fetchArticleContent(articleTitle)
+  .then(words => {
+    var processedContent = content //textProcessor(content);
+    // set up guesses
+    assignGuesses(possibleArticles)
+    startClock()
+    updateStatus('playing')
+    displayWords(processedContent, document.getElementById("textContainer"));
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
   
-  fetchWikipediaArticle(articleTitle)
-    .then(function(content) {
-      // Do something with the content
-      var processedContent = content //textProcessor(content);
-      // set up guesses
-      assignGuesses(possibleArticles)
-      startClock()
-      updateStatus('playing')
-      displayWords(processedContent, document.getElementById("textContainer"));
-    })
-    .catch(function(error) {
-      console.log('Error:', error);
-    });
+  
 }
