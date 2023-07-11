@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var guessSelector = document.getElementById('guessSelector');
     var tryButton = document.getElementById('tryButton');
     guessSelector.disabled = true;
+    guessSelector.selectedIndex = -1;
     tryButton.disabled = true;
 
     start();
@@ -33,6 +34,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var guessSelector = document.getElementById('guessSelector');
     var tryButton = document.getElementById('tryButton');
     guessSelector.disabled = true;
+    guessSelector.selectedIndex = -1;
     tryButton.disabled = true;
 
     quit();
@@ -85,7 +87,7 @@ function guess() {
 function win() {
   stopAnimation()
   var container = document.getElementById("textContainer");
-  container.innerHTML += "<br> <h2>You Win!</h2> <h3>The article was ()</h3> <h3>Clock: ()</h3>"
+  container.innerHTML += `<br> <h2 class="game">You Win!</h2> <h3 class="game">Article: ${articleTitle}</h3> <h3 class="game">Clock: ()</h3>`
   scrollToBottom(container)
   stopClock();
 
