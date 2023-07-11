@@ -7,8 +7,6 @@ document.addEventListener("DOMContentLoaded", function() {
   var startMenu = document.getElementById("startMenu");
   var playMenu = document.getElementById("playMenu");
 
-  var articleTitle; // track correct title
-
   // on play button press
   playButton.addEventListener("click", function() {
     startMenu.classList.toggle("hidden");
@@ -31,6 +29,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 // ./game.js
+
+var articleTitle; // track correct title
 
 function start() {
   // run the main game after clearing
@@ -56,14 +56,21 @@ function guess() {
   if (guess) {
     console.log(guess);
     disableCurrentGuess(guessSelector, guess);
+    updateStatus('incorrect')
 
   }
 
   function correct() {}
-  function incorrect() {}
+  function incorrect() {
+
+  }
 }
 
 function win() {
+  stopAnimation()
+  var container = document.getElementById("textContainer");
+  container.innerHTML = "Quitted. Press start to try again..."
+  stopClock();
 
 }
 
