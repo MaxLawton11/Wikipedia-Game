@@ -87,6 +87,7 @@ function win() {
   var container = document.getElementById("textContainer");
   var style = "style='padding: 0;'"
   var trys = document.getElementById("trys");
+  // still need to get clock data here
   container.innerHTML += `<br> <h2 ${style}>You Win!</h2> <h3 ${style}>Article: ${articleTitle}</h3> <h3 ${style}> Incorrect trys: ${trys.innerHTML}</h3> <h3 ${style}>Clock: ()</h3>`
   scrollToBottom(container)
   stopClock();
