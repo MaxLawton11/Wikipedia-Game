@@ -101,7 +101,7 @@ function win() {
 function quit() {
   stopAnimation();
   var container = document.getElementById("textContainer");
-  container.innerHTML = "Quitted. Press start to try again..."
+  container.innerHTML = "Press start to play again..."
   stopClock();
   var numPossibleArticlesSelector = document.getElementById('numPossibleArticlesSelector');
   numPossibleArticlesSelector.disabled = false;
