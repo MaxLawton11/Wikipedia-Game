@@ -1,4 +1,3 @@
-// ./buttons.js
 document.addEventListener("DOMContentLoaded", function() {
   // define buttons and divs
   var playButton = document.getElementById("playButton");
@@ -40,8 +39,6 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 
-
-// ./game.js
 
 var articleTitle; // track correct title
 
