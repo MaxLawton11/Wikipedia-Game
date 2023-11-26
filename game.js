@@ -1,5 +1,3 @@
-// ./pull.js
-
 function fetchArticleContent(articleTitle) {
     return new Promise((resolve, reject) => {
       const apiUrl = `https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro=&explaintext=&titles=${articleTitle}&callback=processArticleContent`;
@@ -37,10 +35,8 @@ function fetchArticleContent(articleTitle) {
   }
   
   
-  // ./display.js
   var currentIndex = 0;
   var stopFlag = false;
-  
   
   //setings import
   function displayWords(words, container) {
@@ -77,7 +73,6 @@ function fetchArticleContent(articleTitle) {
     container.scrollTop = container.scrollHeight;
   }
   
-  // ./processor.js
   
   function textProcessor(text) {
     var filteredText = text.replace(/==\s*\w+\s*==/g, '');
@@ -92,8 +87,7 @@ function fetchArticleContent(articleTitle) {
     console.log(remainingWords)
       return remainingWords
   }
-  
-  // ./clock.js
+
   
   function startClock() {
     var clock = document.getElementById("clock");
@@ -130,8 +124,6 @@ function fetchArticleContent(articleTitle) {
     return paddedNumber;
   }
   
-  // ./status.js
-  
   var timeoutId;
   
   function updateStatus(event) {
@@ -150,8 +142,6 @@ function fetchArticleContent(articleTitle) {
         break;
     }
   }
-  
-  // ./guess.js
   
   function assignGuesses(options) {
     // this is when we want to relses the inputs
@@ -176,8 +166,6 @@ function fetchArticleContent(articleTitle) {
   function testGuess(guess, articleTitle) {
     return (guess === articleTitle)
   }
-  
-  // ./articles.js
   
   function randomArticles(numPossibleArticles) {
     const articles = [
@@ -289,8 +277,6 @@ function fetchArticleContent(articleTitle) {
     }
     return selectedArticles;
   }
-  
-  // ./game.js
   
   function run(articleTitle, possibleArticles) {
     currentIndex = 0; // Reset the currentIndex
